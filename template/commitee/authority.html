@@ -1,0 +1,78 @@
+{% extends 'commitee/base2.html' %} {% block content %}
+
+<h4 class="text-center alert alert-info mx-5">Update/Edit Authority </h4>
+<div class="row">
+    <div class="col col-md-6 mx-5 "> 
+    {% if users %}
+    <a class="text-danger">Total Authority:-</a>{{a}}
+    <h3>Table Data</h3>
+    <table class="table table-hover table-sm table-responsive table-border">
+        <thead>
+            <tr>
+            <th scope="col">Group id</th>
+            <th scope="col">Group Name</th>
+            <!-- <th scope="col">Last Name</th>
+            <th scope="col">Username</th>
+            <th scope="col">Email</th>
+            <th scope="col">Status</th> -->
+            <th scope="col">Action</th
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+            <th scope="row">{{user.id}}</th>
+            <td>{{user.name}}</td>
+            <!-- <td>{{user.last_name}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.email}}</td>
+            <td>{{user.is_active}}</td> -->
+            <td>
+                <a href="{% url 'editauthority' user.name %}" class="btn btn-warning btn-sm">Edit</a>
+              
+                <form action="{% url 'authoritydelete' user.id %}" method="POST" class="d-inline">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-danger" value="Delete">
+                </form>    
+            </td>
+            </tr>
+        {% endfor %}    
+        </tbody>
+    </table>
+
+    {% else %}
+    <h4 class="text-center alert alert-warning">No User Account</h4>
+    {% endif %}
+    </div>
+
+
+    <div class="col col-md-4 mx-5">
+        <div class="form">
+            <form action="" method="post" class="">
+                <h3> Authority </h3><br>
+                {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for fm in form %}
+                        <div class="row"> 
+                            <div class="col"> {{fm.label_tag}} </div> 
+                            <div class="col"> {{fm}}</div> 
+                        </div>
+                            <div class="">{{fm.errors|striptags}}</div>
+                            <br>
+                    {% endfor %}
+                <br>
+                <center> 
+                <input type="Submit" value="Save" class="updatebtn" >
+                </center>
+                <br>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

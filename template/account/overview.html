@@ -1,0 +1,226 @@
+{% extends 'member/base1.html' %} {% block content %}
+<h4 class="text-center alert alert-info mx-3">Saving Group Overview</h4>
+<div class="row">
+    <div class="col col-md-5 mx-5 ">
+        <h5 class="text-center alert mx-3">Saving Details</h5>
+        <table class="table table-hover table-sm table-responsive border">
+            <tr>
+                <th class="border">Sr No</th>
+                <th class="border">Type</th>
+                <th class="border">Amount</th>
+            </tr>
+            <tr>
+                <td class="border">1</td>
+                <td class="border">Last Year Saving</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">2</td>
+                <td class="border">Current Year Saving</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">3</td>
+                <td class="border">Saving returned/ a/c clossed</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total</td>
+                <td class="border">jj</td>
+            </tr>
+        </table>
+
+
+        <h5 class="text-center alert mx-3">Total Income Details</h5>
+        <table class="table table-hover table-sm table-responsive border">
+            <tr>
+                <th class="border">Sr No</th>
+                <th class="border">Type</th>
+                <th class="border">Amount</th>
+            </tr>
+            <tr>
+                <td class="border">1</td>
+                <td class="border">Member Fee</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">2</td>
+                <td class="border">Bachat Late Fee</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">3</td>
+                <td class="border">Intrest received on Loan</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td class="border">4</td>
+                <td class="border">Intrest received from Bank</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td class="border">5</td>
+                <td class="border">Loan late Fee</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr class="border">
+                <td class="border">6</td>
+                <td class="border">Monthly Meating late Fee</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr class="border">
+                <td class="border">7</td>
+                <td class="border">Yearly Meeting non-attended fine</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr class="border">
+                <td class="border">8</td>
+                <td class="border">Other</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total</td>
+                <td class="border">jj</td>
+            </tr>
+        </table>
+
+
+
+        <h5 class="text-center alert mx-3">Cash Details</h5>
+        <table class="table table-hover table-sm table-responsive border">
+            <tr>
+                <th class="border">Sr No</th>
+                <th class="border">Type</th>
+                <th class="border">Amount</th>
+            </tr>
+            <tr>
+                <td class="border">1</td>
+                <td class="border">Loan Principal</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">2</td>
+                <td class="border">Cash in bank</td>
+                <td class="border">nn</td>
+            </tr>
+            <tr>
+                <td class="border">3</td>
+                <td class="border">FD in bank</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td class="border">4</td>
+                <td class="border">Diwali Advance</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td class="border">5</td>
+                <td class="border">Cash in hand</td>
+                <td class="border">jj</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>Total</td>
+                <td class="border">jj</td>
+            </tr>
+        </table>
+    </div>
+    
+    <div class="col col-md-5 mx-5 ">
+        <h5 class="text-center alert mx-3">Loner Details</h5>
+        {% if loan %}
+        <table class="table table-hover table-sm table-responsive table-border">
+            <thead>
+                <tr>
+                    <th scope="col" class="border">Sr No</th>
+                    <th scope="col" class="border">Member</th>
+                    <th scope="col" class="border">Loan Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in loan %}
+                <tr>
+                    <th scope="row" class="border">{{b.id}}</th>
+                    <td class="border">{{b.member}}</td>
+                    <td class="border">{{b.loan_amount}}</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="border"></td>
+                    <td>Total</td>
+                    <td class="border">{{Total}}</td>
+                </tr>
+                
+            </tbody>
+        </table>
+        {% else %}
+        <h4 class="text-center alert alert-warning mx-4">No Loan Account</h4>
+        {% endif %}
+
+        <h5 class="text-center alert mx-3">Expenditure</h5>
+        {% if expenditure %}
+        <table class="table table-hover table-sm table-responsive table-border">
+            <thead>
+                <tr>
+                    <th scope="col" class="border">Sr No</th>
+                    <th scope="col" class="border">Type</th>
+                    <th scope="col" class="border">Amount</th>
+                    {% if accountant %}
+                    <th scope="col" class="border"> Action </th>
+                    {% endif %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for b in expenditure %}
+                <tr>
+                    <th scope="row" class="border">{{b.id}}</th>
+                    <td class="border">{{b.type}}</td>
+                    <td class="border">{{b.amount}}</td>
+                    {% if accountant %}
+                    <td class="border"><a href="/delete_exp/{{ b.id }}" class="btn btn-danger btn-sm">delete</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                <tr>
+                    <td class="border"></td>
+                    <td>Total</td>
+                    <td class="border">{{Total2}}</td>
+                </tr>
+            </tbody>
+        </table>
+        {% else %}
+        <h4 class="text-center alert alert-warning mx-4">No Loan Account</h4>
+
+        {% endif %}
+        {% if accountant %}
+        <h4>Expenditures Form</h4>
+        <div class="form">
+            <form action="{% url 'expenditures' %}" method="POST">
+                {% csrf_token %}
+                {% if form1.non_field_errors %}
+                {% for error in form1.non_field_errors %}
+                <p class="error">{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+
+                {% for fm1 in form1 %}
+                <div class="row">
+                    <div class="col"> {{fm1.label_tag}} </div>
+                    <div class="col"> {{fm1}}</div>
+                </div>
+                <div class="">{{fm.errors|striptags}}</div>
+                <br>
+                {% endfor %}
+                <br>
+                <center>
+                    <input type="Submit" value="Save" class="updatebtn">
+                </center>
+                <br>
+            </form>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

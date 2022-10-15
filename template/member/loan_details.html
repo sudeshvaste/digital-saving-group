@@ -1,0 +1,111 @@
+{% extends 'member/base1.html' %} {% block content %}
+
+
+<div class="row">
+    <div class="col col-md-3 mx-5 ">
+        <h4 class="text-center alert alert-info mx-3">Loan account {{loan.id}} Details</h4><br>
+        <p class="text mx-4">
+            <div>Member Name:-{{loan.member}}</div>
+            <div> A/c id:-{{loan.id}}</div>
+            <div>Loan Type:-{{loan.intrest_rate}}</div>
+            <div>Loan Amountt:-{{loan.loan_amount}}</div>
+            <div>Application Data:-{{loan.application_Date}}</div>
+            <div>Status at Secretary:-{{loan.status_secretary}}</div>
+            <div>Status at President:-{{loan.status_president}}</div>
+            <div>Status at Accountant:-{{loan.status_accountant}}</div>
+            <div>Status:-{{loan.approve}}</div>
+        </p>
+        <br>
+
+        {% if form %}
+        <form action="" method="post" class="">
+            <h3> Repay Form </h3><br>
+            {% csrf_token %}
+                {% if form.non_field_error %}
+                    {% for error in form.non_field_error %}
+                        <p class="error">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+
+                {% for fm in form %}
+                    <div class="row"> 
+                        <div class="col"> {{fm.label_tag}} </div> 
+                        <div class="col"> {{fm}}</div> 
+                    </div>
+                        <div class="">{{fm.errors|striptags}}</div>
+                        <br>
+                {% endfor %}
+            <br>
+            <center> 
+            <input type="Submit" value="Save" class="Save" >
+            </center>
+            <br>
+        </form>
+        {% endif %}
+    </div>
+
+
+
+
+    <div class="col col-md-6 mx-5 "> 
+        <h4 class="text-center alert alert-info mx-5">Loan Details</h4>
+        {% if loan_installment %}
+        <a class="text-danger">Total Authority:-</a>{{a}}
+        <h3>Table Data</h3>
+            <table class="table table-hover table-sm table-responsive table-border">
+                <thead>
+                    <tr>
+                        <th scope="col">Loan id</th>
+                        
+                        <th scope="col">Year</th>
+                        <th scope="col">Month</th>
+                        <th scope="col">installment Data</th>
+                        <th scope="col">last modified</th>
+                        <th scope="col">loan amount</th>
+                        <th scope="col">intrest on loan</th>
+                        <th scope="col">late fee </th>
+                        {% if Accountant %}
+                        <th scope="col">Action </th>
+                        {% else %}
+                        <th scope="col">Status </th>
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                {% for loan in loan_installment %}
+                    <tr>
+                        <th scope="row">{{loan.id}}</th>
+                        
+                        <td>{{loan.year}}</td>
+                        <td>{{loan.month}}</td>
+                        <td>{{loan.installment_date}}</td>
+                        <td>{{loan.last_modified}}</td>
+                        <td>{{loan.loan_amount}}</td>
+                        <td>{{loan.intrest_on_loan}}</td>
+                        <td>{{loan.late_fee}}</td>
+                        <td>{{loan.status_accountant}}
+                            {% if Accountant %}
+                            {% if loan.status_accountant == 'Pending' %}
+                            <a href="/approve/{{ loan.id }}/Accountant" class="btn btn-warning btn-sm">Approve</a>
+                            <a href="/decline/{{ loan.id }}/Accountant" class="btn btn-danger btn-sm">Decline</a>  
+                            {% endif %}
+                            {% endif %}  
+                        </td>
+                    </tr>
+                {% endfor %}    
+                </tbody>
+            </table>
+
+        {% else %}
+            <h4 class="text-center alert alert-warning">No User Account</h4>
+        {% endif %}
+    
+
+        
+    </div>
+</div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends 'member/base1.html' %} {% block content %} 
+
+<h2>Welcome {{name}}!</h2>
+
+
+<div class="row">
+    <div class="col col-md-5 mx-5  ">
+        <h4 class="text-center alert alert-info mx-3">Bachat Details</h4>
+        {% if bachat %}
+        <table class="table table-hover table-sm table-responsive table-border">
+            <thead>
+                <tr>
+                <th scope="col">Sr No</th>
+                <th scope="col">Member</th>
+                <th scope="col">Year</th>
+                <th scope="col">Month</th>
+                <th scope="col">Application Data</th>
+                <th scope="col">Last Update</th>
+                <th scope="col">Bachat Amt</th>
+                <th scope="col">Late Fee </th>
+                <th scope="col">Status at Accountant</th>
+                
+                
+                </tr>
+            </thead>
+            <tbody>
+            {% for b in bachat %}
+                <tr>
+                <th scope="row">{{b.id}}</th>
+                <td>{{b.member}}</td>
+                <td>{{b.year}}</td>
+                <td>{{b.month}}</td>
+                <td>{{b.installment_date}}</td>
+                <td>{{b.last_modified}}</td>
+                <td>{{b.bachat_amount}}</td>
+                <td>{{b.late_fee}}</td>
+                <td>{{b.status_accountant}}</td>
+                
+                </tr>
+            {% endfor %}    
+            </tbody>
+        </table>
+
+        {% else %}
+        <h4 class="text-center alert alert-warning mx-4">No User Account</h4>
+
+        
+        {% endif %}
+
+        <br>
+        <h4>Bachat Form</h4>
+        <div class="form">
+            <form action="{% url 'bachat_appl' %}" method="POST" >
+                {% csrf_token %}
+                    {% if form1.non_field_errors %}
+                        {% for error in form1.non_field_errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for fm1 in form1 %}
+                        <div class="row"> 
+                            <div class="col"> {{fm1.label_tag}} </div> 
+                            <div class="col"> {{fm1}}</div> 
+                        </div>
+                            <div class="">{{fm.errors|striptags}}</div>
+                            <br>
+                    {% endfor %}
+                <br>
+                <center> 
+                <input type="Submit" value="Save" class="updatebtn" >
+                </center>
+                <br>
+            </form>
+        </div>
+    </div>
+
+    <div class="col col-md-5 mx-5  "> 
+        <h4 class="text-center alert alert-info mx-3">Loan Details</h4>
+        {% if loans %}
+        <table class="table table-hover table-sm table-responsive table-border">
+            <thead>
+                <tr>
+                <th scope="col">Loan A/c id</th>
+                <th scope="col">Loan Type</th>
+                <th scope="col">Loan Amt</th>
+                <th scope="col">Application Data</th>
+                <th scope="col">Status at Secretary</th>
+                <th scope="col">Status at President</th>
+                <th scope="col">Status at Accountant</th>
+                <th scope="col">Status </th>
+                
+                </tr>
+            </thead>
+            <tbody>
+            {% for loan in loans %}
+                <tr>
+                    <th scope="row">
+                        <a href="{% url 'loan_details' loan.id %}" class="link">{{loan.id}}</a>
+                    </th>
+                    <td>{{loan.intrest_rate}}</td>
+                    <td>{{loan.loan_amount}}</td>
+                    <td>{{loan.application_Date}}</td>
+                    <td>{{loan.status_secretary}}</td>
+                    <td>{{loan.status_president}}</td>
+                    <td>{{loan.status_accountant}}</td>
+                    <td>{{loan.approve}}</td>
+                
+                </tr>
+            {% endfor %}    
+            </tbody>
+        </table>
+
+        {% else %}
+        <h4 class="text-center alert alert-warning mx-4">No User Account</h4>
+        {% endif %}
+
+
+        <br>
+        <h4>Loan Application</h4>
+        <div class="form">
+            <form action="" method="POST" class="">
+                {% csrf_token %}
+                    {% if form.non_field_errors %}
+                        {% for error in form.non_field_errors %}
+                            <p class="error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% for fm in form %}
+                        <div class="row"> 
+                            <div class="col"> {{fm.label_tag}} </div> 
+                            <div class="col"> {{fm}}</div> 
+                        </div>
+                            <div class="">{{fm.errors|striptags}}</div>
+                            <br>
+                    {% endfor %}
+                <br>
+                <center> 
+                <input type="Submit" value="Save" class="updatebtn" >
+                </center>
+                <br>
+            </form>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+
+     
+

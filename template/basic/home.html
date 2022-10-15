@@ -1,0 +1,132 @@
+{% extends 'Basic/base.html' %}
+ {% block content %}
+ {% load static %}
+
+
+
+<center>
+<div class="Container">
+<div class="wrapper">
+   <div class="row g-3 my-2">
+      
+   <div class="col-md-6 mx-5 border border-dark rounded ">
+   <div class="title-text">
+      <div class="title text-danger border-bottom border-danger">
+         <h4>Register Form</h4>
+      </div>
+   </div>
+   <br>
+         <div class="form-inner ">
+          <form action="" method="post" >
+            {% csrf_token %}
+            <div class="field">
+               <div class="row mb-3">
+               <div class="col-sm ">
+                  <label for="formGroupExampleInput" class="form-label">First Name:</label>
+               </div>
+               <div class="col">
+                  <input type="text" class="form-control" placeholder="First Name" name="first_name" required>
+               </div>
+               </div>
+            </div>
+
+            <div class="field">
+               <div class="row mb-3">
+                  <div class="col-sm">
+                  <label for="formGroupExampleInput" class="form-label">Last Name:</label>
+               </div>
+               <div class="col">
+                  <input type="text" class="form-control" placeholder="Last Name" name="last_name"   required>
+               </div>
+               </div>
+            </div>
+
+            <div class="field">
+               <div class="row mb-3">
+                  <div class="col-sm">
+                  <label for="formGroupExampleInput" class="form-label">Username:</label>
+               </div>
+               <div class="col">
+                  <input type="text" class="form-control" placeholder="Username" name="username"   required>
+               </div>
+               </div>
+            </div>
+
+            <div class="field">
+               <div class="row mb-3">
+                  <div class="col-sm">
+                  <label for="formGroupExampleInput" class="form-label">Email Address:</label>
+               </div>
+               <div class="col">
+                  <input type="email" class="form-control" placeholder="Email Address" name="email"  required>
+               </div>
+               </div>
+            </div>
+
+            <div class="field">
+               <div class="row mb-3">
+                  <div class="col-sm">
+                  <label for="formGroupExampleInput" class="form-label">Password:</label>
+               </div>
+               <div class="col">
+                  <input type="password" class="form-control" placeholder="Password" name="password1"  required>
+               </div>
+               </div>
+            </div>
+
+            <div class="field">
+               <div class="row mb-3 ">
+                  <div class="col-sm">
+                  <label for="formGroupExampleInput" class="form-label">Conform Password:</label>
+               </div>
+               <div class="col">
+                  <input type="password" class="form-control" placeholder="Conform Password" name="password2"  required>
+               </div>
+               </div>
+            </div>
+            
+            <input type="submit" class="btn btn-primary btn-success " value="Register"><br><br>
+          </form>
+      </div>
+   </div>
+ 
+ <script src="{% static 'js/bootstrap.js' %}"></script>
+
+   <div class="col-md-4 mx-5 border border-dark rounded">
+   <div class="title-text">
+      <div class="title text-danger border-bottom border-danger">
+         <h4>Login Here</h4> 
+      </div>
+   </div>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+        {% for error in form.non_field_errors %}
+        <p class="alert alert-sm alert-">{{ error }}</p>
+        {% endfor %}
+        {% endif %}
+        <br>
+        {% for fm in form %}
+         <div class="row"> 
+         <div class="col"> {{fm.label_tag}} </div> 
+         <div class="col"> {{fm}}</div> 
+         </div>
+         <div class="">{{fm.errors|striptags}}</div>
+         
+       
+        <br>
+        {% endfor%}
+        
+        <small class="text text-left">Verify Capture:-</small>  
+        <br>
+         {{b}} + {{c}} = <input type="text" class="" name="answer" required><br><br>
+        <input type="submit" class="btn btn-primary btn-success" value="Login">
+    </form>
+    
+   </div>
+   </div>
+</div>
+</div>
+</center>
+
+{% endblock %}

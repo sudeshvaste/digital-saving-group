@@ -1,0 +1,150 @@
+{% extends 'commitee/base2.html' %} {% block content %}
+
+<h4 class="text-center alert alert-info mx-5">Loan Details</h4>
+
+<div class="row">
+    <div class="col col-md-8 mx-5 ">
+
+        <!-- <div class="row m-1">
+            <div class="col-md-12">
+                <form class="card card-sm">
+                    <div class="card-body row no-gutters align-items-center">
+                        <div class="col">
+                            <input type="search" name='member_name' placeholder="Enter member id"
+                                class="form-control form-control-borderless">
+                        </div>
+                        <div class="col-auto">
+                            <button class="btn btn-success" type="submit">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div> -->
+        {% if loans or loan1 %}
+        <table class="table table-hover table-sm table-responsive table-border">
+            <thead>
+                <tr>
+                    <th scope="col">Loan A/c id</th>
+                    <th scope="col">Member Name</th>
+                    <th scope="col">Loan Type</th>
+                    <th scope="col">Loan Amt</th>
+                    <th scope="col">Application Data</th>
+                    <th scope="col">Status at Secretary</th>
+                    <th scope="col">Status at President</th>
+                    <th scope="col">Status at Accountant</th>
+                    <th scope="col">Status</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <th scope="row"><a href="{% url 'loan_details' loan.id %}" class="link">{{loan.id}}</a></th>
+                    <td>{{loan.member}}</td>
+                    <td>{{loan.intrest_rate}}</td>
+                    <td>{{loan.loan_amount}}</td>
+                    <td>{{loan.application_Date}}</td>
+
+                    <td>
+                        <small>{{loan.status_secretary}}
+                            {% if secretary %}
+                            <div>
+                                <a href="/approve/{{ loan.id }}/secretary" class="btn btn-warning btn-sm">Approve</a>
+                                <a href="/decline/{{ loan.id }}/secretary" class="btn btn-danger btn-sm">Decline</a>
+                            </div>
+                            {% endif %}
+                        </small>
+                    </td>
+
+                    <td>
+                        <small>{{loan.status_president}}{% if president %}
+                            <div>
+                                <a href="/approve/{{ loan.id }}/president" class="btn btn-warning btn-sm">Approve</a>
+                                <a href="/decline/{{ loan.id }}/president" class="btn btn-danger btn-sm">Decline</a>
+                            </div>{% endif %}
+                        </small>
+                    </td>
+
+                    <td>
+                        <small>{{loan.status_accountant}}
+                            <div>{% if accountant %}
+                                <a href="/approve/{{ loan.id }}/accountant" class="btn btn-warning btn-sm">Approve</a>
+                                <a href="/decline/{{ loan.id }}/accountant" class="btn btn-danger btn-sm">Decline</a>
+                            </div>{% endif %}
+                        </small>
+                    </td>
+
+                    <td>{{loan.approve}}</td>
+                </tr>
+                {% endfor %}
+
+                {% for loan in loan1 %}
+                <tr>
+                    <th scope="row"><a href="{% url 'loan_details' loan.id %}" class="link">{{loan.id}}</a></th>
+                    <td>{{loan.member}}</td>
+                    <td>{{loan.intrest_rate}}</td>
+                    <td>{{loan.loan_amount}}</td>
+                    <td>{{loan.application_Date}}</td>
+
+                    <td>
+                        <small>
+                            {{loan.status_secretary}}
+                        </small>
+                    </td>
+
+                    <td>
+                        <small>
+                            {{loan.status_president}}
+                        </small>
+                    </td>
+
+                    <td>
+                        <small>
+                            {{loan.status_accountant}}
+                        </small>
+                    </td>
+
+                    <td>{{loan.approve}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        {% else %}
+        <h4 class="text-center alert alert-warning">No User Account</h4>
+        {% endif %}
+    </div>
+
+    {% if accountant %}
+    <div class="col col-md-2 mx-5 ">
+        
+        <div class="form">
+
+            <form action="" method="post" class="">
+                <h3> Loan Form </h3><br>
+                {% csrf_token %}
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <p class="error">{{ error }}</p>
+                {% endfor %}
+                {% endif %}
+
+                {% for fm in form %}
+                <div class="row">
+                    <div class="col"> {{fm.label_tag}} </div>
+                    <div class="col"> {{fm}}</div>
+                </div>
+                <div class="">{{fm.errors|striptags}}</div>
+                <br>
+                {% endfor %}
+                <br>
+                <center>
+                    <input type="Submit" value="Save" class="updatebtn">
+                </center>
+                <br>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
